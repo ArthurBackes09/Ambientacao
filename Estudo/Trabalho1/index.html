@@ -19,15 +19,18 @@
     <p>Relembrando como usar HTML e CSS e <b class="JS">JavaScript</b>.</p>
     <script>
         alert("Minha primeira mensagem.");
-        
-        confirm("Vai lembrar de praticar mais depois?");
-
-        let Resposta = prompt("Esse é qual trabalho?");
-        if(Resposta=="1"){
+        let Resposta1 = confirm("Vai lembrar de praticar mais depois?");/* Treinando o uso de comentários */
+        if(Resposta1==false){
+            alert("calado, vai estudar!");
+        }
+        let Resposta2 = Number(prompt("Esse é qual trabalho?"));/* Lembrar de colocar o tipo de variavel antes do prompt */
+        if(Resposta2==1){
             alert("Sabe muito ");
             }else{
-            confirm("Tá moscando, quer ficar quenem o Gabs?");
-        }
+            let Resposta3 = confirm("Tá moscando, quer ficar quenem o Gabs?");/* Não fique quenem o Gabs */
+            if(Resposta3 == true){
+                alert("Tú ta louco, vai estudar!");
+        }}
         
         
     </script>
