@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Primeiro Trabalho</title>
+    <style>
+        .JS{
+            color: #034210;
+        }
+        body{
+            background-color: #99e5e5;
+            color: #110c35;
+        }
+    </style>
+</head>
+<body>
+    <h1>Olá, mundo!</h1>
+    <p>Relembrando como usar HTML e CSS e <b class="JS">JavaScript</b>.</p>
+    <script>
+let idade = prompt("Qual é o seu nome?");
+alert ("Olá, vamos aprender sobre concatenação, " + idade + "."); // Exemplo de concatenação
+let numero1 = parseInt(prompt("Digite um número:"));
+let numero2 = parseInt(prompt("Digite outro número:"));
+let soma = alert("A soma dos números é: " + (numero1 + numero2)); // exemplo de concatenação com soma
+/* A soma de dois numeros só vai funcionar se os dois forem Numbers, se pedir para digitar um número e depois somar,
+devemos usar parseint para numeros inteitros, parsefloat para numeros decimais e Number que vai aceitar os dois tipos. */
+let numero3 = Number(prompt("Digite um número:"));
+let numero4 = Number(prompt("Digite outro número:"));
+let concatenacao = alert("A soma dos números é: " + (String(numero3) + String(numero4))); // exemplo de transformação de Number para String
+/* Se pedirmos para somar números eles sendo Strings os números só vão ficar um do lado do outro como: "2" + "2" = 22*/ 
+
+    </script>
+</body>
+</html>
