@@ -79,7 +79,6 @@ app.post('/alunos', async (req, res) => {
 
         res.status(201).json({
             mensagem: 'Aluno cadastrado com sucesso!',
-            id: resultado.insertId
         });
 
     } catch (erro) {
@@ -221,7 +220,6 @@ app.post('/responsaveis', async (req, res) => {
 
         res.status(201).json({
             mensagem: 'Responsável cadastrado com sucesso!',
-            id: resultado.insertId
         });
 
     } catch (erro) {
@@ -353,7 +351,6 @@ app.post('/jogos', async (req, res) => {
 
         res.status(201).json({
             mensagem: 'Jogo cadastrado com sucesso!',
-            id: resultado.insertId
         });
 
     } catch (erro) {
@@ -494,7 +491,6 @@ app.post('/jogos-favoritos', async (req, res) => {
 
         res.status(201).json({
             mensagem: 'Jogo favorito cadastrado com sucesso!',
-            id: resultado.insertId
         });
 
     } catch (erro) {
