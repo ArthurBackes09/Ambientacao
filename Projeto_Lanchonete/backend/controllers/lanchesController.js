@@ -1,8 +1,14 @@
 import { pool } from "../database/conexao.js";
 
+const consultaLanche = `
+    SELECT l.id, l.nome, l.descricao AS ingredientes, c.nome AS categoria, l.preco
+    FROM lanches l
+    LEFT JOIN categorias c ON c.id = l.id_categoria
+`;
+
 async function listarLanches(req, res) {
     try {
-        const [lanches] = await pool.query("SELECT * FROM lanches ORDER BY id DESC");
+        const [lanches] = await pool.query(`${consultaLanche} ORDER BY l.id DESC`);
         return res.status(200).json(lanches);
     } catch (erro) {
         console.error("Erro ao buscar lanches:", erro);
@@ -13,7 +19,7 @@ async function listarLanches(req, res) {
 async function buscarLanchePorId(req, res) {
     try {
         const [lanches] = await pool.query(
-            "SELECT * FROM lanches WHERE id = ?",
+            `${consultaLanche} WHERE l.id = ?`,
             [req.params.id]
         );
         if (lanches.length === 0) {
@@ -25,6 +31,14 @@ async function buscarLanchePorId(req, res) {
         console.error("Erro ao buscar lanche:", erro);
         return res.status(500).json({ mensagem: "Erro ao buscar lanche." });
     }
+}
+
+async function obterIdCategoria(nome) {
+    const [resultado] = await pool.query(
+        "INSERT INTO categorias (nome) VALUES (?) ON DUPLICATE KEY UPDATE id = LAST_INSERT_ID(id)",
+        [nome]
+    );
+    return resultado.insertId;
 }
 
 function validarLanche(lanche) {
@@ -49,9 +63,10 @@ async function cadastrarLanche(req, res) {
     const { nome, ingredientes, categoria, preco } = req.body;
 
     try {
+        const idCategoria = await obterIdCategoria(categoria.trim());
         const [resultado] = await pool.query(
-            "INSERT INTO lanches (nome, ingredientes, categoria, preco) VALUES (?, ?, ?, ?)",
-            [nome.trim(), ingredientes.trim(), categoria.trim(), Number(preco)]
+            "INSERT INTO lanches (nome, descricao, id_categoria, preco) VALUES (?, ?, ?, ?)",
+            [nome.trim(), ingredientes.trim(), idCategoria, Number(preco)]
         );
 
         return res.status(201).json({
@@ -79,9 +94,10 @@ async function atualizarLanche(req, res) {
             return res.status(404).json({ mensagem: "Lanche não encontrado." });
         }
 
+        const idCategoria = await obterIdCategoria(categoria.trim());
         await pool.query(
-            "UPDATE lanches SET nome = ?, ingredientes = ?, categoria = ?, preco = ? WHERE id = ?",
-            [nome.trim(), ingredientes.trim(), categoria.trim(), Number(preco), req.params.id]
+            "UPDATE lanches SET nome = ?, descricao = ?, id_categoria = ?, preco = ? WHERE id = ?",
+            [nome.trim(), ingredientes.trim(), idCategoria, Number(preco), req.params.id]
         );
 
         return res.status(200).json({
